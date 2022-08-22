@@ -2,6 +2,7 @@
     "dependencies": {
         "dotenv": "^16.0.1",
         "express": "^4.18.1",
+        "forever": "^4.0.3",
         "jsonwebtoken": "^8.5.1",
         "mongoose": "^6.5.2",
         "mongoose-int32": "^0.6.0"
@@ -12,7 +13,8 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start:dev": "nodemon --exec node ./src/index.js"
+        "start:dev": "nodemon --exec node ./src/index.js",
+        "start": "forever start ./src/index.js"
     },
     "type": "module",
     "author": "",
