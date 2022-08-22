@@ -20,7 +20,11 @@ mongoose.connect(
     },
     (err) => (err ? console.log(err) : null)
 );
-app.use(express.json());
-app.use("/api/user", authRoute);
+app.get("/", (req, res) => {
+    res.send("cloudo project");
+});
+
+// app.use(express.json());
+// app.use("/api/user", authRoute);
 
 app.listen(3000);
