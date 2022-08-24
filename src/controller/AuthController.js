@@ -9,7 +9,8 @@ const register = async (req, res) => {
     });
     try {
         const savedUser = await user.save();
-        res.status(200).json({ info: savedUser });
+        const token = jwt.sign({ _id: savedUser._id }, process.env.JWT_SECRET);
+        res.status(200).json({ info: savedUser, token: token });
     } catch (err) {
         res.status(400).send(err);
     }
