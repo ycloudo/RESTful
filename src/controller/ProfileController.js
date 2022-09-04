@@ -1,4 +1,5 @@
 import User from "../model/User.js";
+import Avatars from "../model/Avatars.js";
 
 const editProfile = async (req, res) => {
     const uid = req.params.uid;
@@ -21,4 +22,30 @@ const editProfile = async (req, res) => {
     }
 };
 
-export default { editProfile };
+const getProfile = async (req, res) => {
+    const uid = req.params.uid;
+    try {
+        const result = await User.findOne({ _id: uid });
+        res.status(200).json({
+            name: result.name,
+            account: result.account,
+            password: result.password,
+            gender: result.gender,
+            avatar_id: result.avatar_id,
+        });
+    } catch (err) {
+        res.status(400).json({ message: err });
+    }
+};
+
+const getAvatarId = async (req, res) => {
+    const aid = req.params.aid;
+    try {
+        const result = await Avatars.findOne({ aid: aid });
+        res.status(200).json({ base64: result.base64 });
+    } catch (err) {
+        res.status(400).json({ message: err });
+    }
+};
+
+export default { editProfile, getProfile, getAvatarId };

@@ -19,6 +19,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         require: true,
     },
+    avatar_id: {
+        type: Number,
+        require: true,
+    },
     favor: {
         type: Array,
         require: false,

@@ -6,6 +6,7 @@ const register = async (req, res) => {
         name: req.body.name,
         account: req.body.account,
         password: req.body.password,
+        avatar_id: RandomInt(1, 5),
     });
     try {
         const savedUser = await user.save();
@@ -14,6 +15,12 @@ const register = async (req, res) => {
     } catch (err) {
         res.status(400).send(err);
     }
+};
+
+const RandomInt = (min, max) => {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
 const login = async (req, res) => {
