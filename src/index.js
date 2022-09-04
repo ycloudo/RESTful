@@ -24,4 +24,3 @@ mongoose.connect(
 app.use(express.json());
 app.use("/api/user", authRoute);
 http.createServer(app).listen(8080);
-
