@@ -6,6 +6,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import authRoute from "./routes/AuthRoutes.js";
+import dataRoute from "./routes/DataRoutes.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const app = express();
@@ -23,4 +24,5 @@ mongoose.connect(
 
 app.use(express.json());
 app.use("/api/user", authRoute);
+app.use("/api/data", dataRoute);
 http.createServer(app).listen(8080);
