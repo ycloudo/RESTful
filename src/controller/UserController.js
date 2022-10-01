@@ -48,4 +48,33 @@ const getAvatarId = async (req, res) => {
     }
 };
 
-export default { editProfile, getProfile, getAvatarId };
+const getFavor = async (req, res) => {
+    const uid = req.params.uid;
+    try {
+        const result = await User.findOne({ _id: uid });
+        res.status(200).json({ favor: result.favor });
+    } catch (err) {
+        res.status(400).json({ message: err });
+    }
+};
+
+const getDrawerInfo = async (req, res) => {
+    const uid = req.params.uid;
+    try {
+        const result = await User.findOne({ _id: uid });
+        res.status(200).json({
+            name: result.name,
+            avatar_id: result.avatar_id,
+        });
+    } catch (err) {
+        res.status(400).json({ message: err });
+    }
+};
+
+export default {
+    editProfile,
+    getProfile,
+    getAvatarId,
+    getFavor,
+    getDrawerInfo,
+};

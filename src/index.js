@@ -7,6 +7,8 @@ import { fileURLToPath } from "url";
 import { dirname } from "path";
 import authRoute from "./routes/AuthRoutes.js";
 import dataRoute from "./routes/DataRoutes.js";
+import resRoute from "./routes/ResRoutes.js";
+import searchRoute from "./routes/SearchRoute.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const app = express();
@@ -25,4 +27,7 @@ mongoose.connect(
 app.use(express.json());
 app.use("/api/user", authRoute);
 app.use("/api/data", dataRoute);
+app.use("/api/restaurant", resRoute);
+app.use("/api/search", searchRoute);
+
 http.createServer(app).listen(8080);

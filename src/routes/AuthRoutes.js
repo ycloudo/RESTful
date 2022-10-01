@@ -1,13 +1,15 @@
 import express from "express";
 import AuthController from "../controller/AuthController.js";
-import ProfileController from "../controller/ProfileController.js";
+import UserController from "../controller/UserController.js";
 import verifyJWT from "../middleware/verifyJWT.js";
 
 const router = express.Router();
 router.post("/register", AuthController.register);
 router.post("/login", AuthController.login);
-router.patch("/editProfile/:uid", verifyJWT, ProfileController.editProfile);
-router.get("/getProfile/:uid", verifyJWT, ProfileController.getProfile);
-router.get("/getAvatar/:aid", ProfileController.getAvatarId);
+router.patch("/editProfile/:uid", verifyJWT, UserController.editProfile);
+router.get("/getProfile/:uid", verifyJWT, UserController.getProfile);
+router.get("/getAvatar/:aid", UserController.getAvatarId);
+router.get("/getFavor/:uid", verifyJWT, UserController.getFavor);
+router.get("/getDrawerInfo/:uid", verifyJWT, UserController.getDrawerInfo);
 
 export default router;
