@@ -6,13 +6,7 @@ const ResInfo = async (req, res) => {
     try {
         const restaurant = Restaurant.findOne({ _id: rid });
         res.status(200).json({
-            name: restaurant.name,
-            rate: restaurant.rate,
-            address: restaurant.address,
-            res_type: restaurant.restaurant_type,
-            isFavor: restaurant.isFavor,
-            photo: restaurant.photo,
-            class_rate: restaurant.class_rate,
+            reviews: restaurant.reviews,
         });
     } catch (err) {
         res.status(400).json({ message: err });
@@ -29,8 +23,12 @@ const AllInfo = async (req, res) => {
                 result[index++] = {
                     id: a._id,
                     name: a.name,
+                    rate: a.rate,
+                    address: a.address,
+                    res_type: a.restaurant_type,
+                    isFavor: a.isFavor,
                     photo: a.photo,
-                    type: a.restaurant_type,
+                    class_rate: a.class_rate,
                 };
             });
             res.status(200).json(result);
