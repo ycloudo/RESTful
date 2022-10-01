@@ -1,3 +1,4 @@
+import { type } from "os";
 import Restaurant from "../model/Restaurant.js";
 
 const ResInfo = async (req, res) => {
@@ -24,6 +25,7 @@ const AllInfo = async (req, res) => {
         Restaurant.find({}, (err, rest) => {
             let index = 0;
             rest.forEach((a) => {
+                console.log(a.photo);
                 result[index++] = {
                     id: a._id,
                     name: a.name,
