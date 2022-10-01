@@ -2,7 +2,7 @@ import { type } from "os";
 import Restaurant from "../model/Restaurant.js";
 
 const ResInfo = async (req, res) => {
-    const rid = req.param.rid;
+    const rid = req.params.rid;
     try {
         const restaurant = Restaurant.findOne({ _id: rid });
         res.status(200).json({
