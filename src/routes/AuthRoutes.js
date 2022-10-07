@@ -11,5 +11,6 @@ router.get("/getProfile/:uid", verifyJWT, UserController.getProfile);
 router.get("/getAvatar/:aid", UserController.getAvatarId);
 router.get("/getFavor/:uid", verifyJWT, UserController.getFavor);
 router.get("/getDrawerInfo/:uid", verifyJWT, UserController.getDrawerInfo);
+router.post("/isTokenValid", AuthController.isTokenValid);
 
 export default router;

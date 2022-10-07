@@ -44,4 +44,21 @@ const login = async (req, res) => {
     });
 };
 
-export default { register, login };
+const isTokenValid = async (req, res) => {
+    const token = req.body.token;
+    try {
+        const result = jwt.verify(
+            token,
+            process.env.JWT_SECRET,
+            (err, decoded) => {
+                if (err) return false;
+                else return true;
+            }
+        );
+        res.status(200).json(result);
+    } catch (e) {
+        res.status(401).json({ message: "function failed" });
+    }
+};
+
+export default { register, login, isTokenValid };
