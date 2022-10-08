@@ -29,14 +29,12 @@ const AllInfo = async (req, res) => {
         Restaurant.find({}, (err, rest) => {
             let index = 0;
             rest.forEach((a) => {
-                console.log(a.photo);
                 result[index++] = {
                     id: a._id,
                     name: a.name,
                     rate: a.rate,
                     address: a.address,
                     res_type: a.restaurant_type,
-                    isFavor: a.isFavor,
                     photo: a.photo,
                     class_rate: a.class_rate,
                 };
