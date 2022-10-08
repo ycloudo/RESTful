@@ -71,10 +71,28 @@ const getDrawerInfo = async (req, res) => {
     }
 };
 
+const setFavor = async (req, res) => {
+    const favorArray = req.body.favor;
+    const uid = req.body.uid;
+    const filter = { _id: uid };
+    const updateDoc = {
+        $set: {
+            favor: favorArray,
+        },
+    };
+    try {
+        await User.updateOne(filter, updateDoc);
+        res.status(200).json({ message: "edit success" });
+    } catch (err) {
+        res.status(400).json({ message: err });
+    }
+};
+
 export default {
     editProfile,
     getProfile,
     getAvatarId,
     getFavor,
     getDrawerInfo,
+    setFavor,
 };
