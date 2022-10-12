@@ -12,7 +12,11 @@ const Searching = async (req, res) => {
                 result[index++] = {
                     id: a._id,
                     name: a.name,
+                    rate: a.rate,
+                    address: a.address,
+                    res_type: a.restaurant_type,
                     photo: a.photo,
+                    class_rate: a.class_rate,
                 };
             });
             res.status(200).json(result);
