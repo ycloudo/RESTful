@@ -51,9 +51,9 @@ const infoById = async (req, res) => {
     let index = 0;
     const favors = req.body.favors;
     try {
-        favors.forEach((id) => {
-            const res = Restaurant.findOne({
-                _id: id,
+        for (let index = 0; index < favors.length; index++) {
+            const res = await Restaurant.findOne({
+                _id: favors[index],
             });
             result[index++] = {
                 id: res._id,
@@ -64,7 +64,7 @@ const infoById = async (req, res) => {
                 photo: res.photo,
                 class_rate: res.class_rate,
             };
-        });
+        }
         res.status(200).json(result);
     } catch (err) {
         res.status(400).json({ message: err });
