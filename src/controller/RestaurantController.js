@@ -46,24 +46,27 @@ const AllInfo = async (req, res) => {
     }
 };
 
-const infoByTag = async (req, res) => {
+const infoById = async (req, res) => {
     let result = [];
-    const tag = req.param.tag;
+    let index = 0;
+    const favors = req.body.favors;
     try {
-        Restaurant.find({ restaurant_type: tag }, (err, rest) => {
-            let index = 0;
-            rest.forEach((a) => {
-                result[index++] = {
-                    id: a._id,
-                    name: a.name,
-                    photo: a.photo,
-                };
-            });
-            res.status(200).json(result);
+        favors.forEach((id) => {
+            const res = Restaurant.findOne({ _id: id });
+            result[index++] = {
+                id: res._id,
+                name: res.name,
+                rate: res.rate,
+                address: res.address,
+                res_type: res.restaurant_type,
+                photo: res.photo,
+                class_rate: res.class_rate,
+            };
         });
+        res.status(200).json(result);
     } catch (err) {
         res.status(400).json({ message: err });
     }
 };
 
-export default { ResInfo, AllInfo, infoByTag };
+export default { ResInfo, AllInfo, infoById };
