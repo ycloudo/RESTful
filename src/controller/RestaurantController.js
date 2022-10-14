@@ -1,4 +1,5 @@
 import Restaurant from "../model/Restaurant.js";
+import mongoose from "mongoose";
 
 const ResInfo = async (req, res) => {
     const id = req.params.rid;
@@ -53,7 +54,7 @@ const infoById = async (req, res) => {
     try {
         favors.forEach((id) => {
             const res = Restaurant.find({
-                _id: id,
+                _id: mongoose.Types.ObjectId(id),
             });
             result[index++] = {
                 id: res._id,
