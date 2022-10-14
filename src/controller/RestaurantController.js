@@ -51,8 +51,10 @@ const infoById = async (req, res) => {
     let index = 0;
     const favors = req.body.favors;
     try {
-        favors.forEach((id) => {
-            const res = Restaurant.findOne({ _id: id });
+        favors.forEach(async (id) => {
+            const res = await Restaurant.findOne({
+                _id: id,
+            });
             result[index++] = {
                 id: res._id,
                 name: res.name,
