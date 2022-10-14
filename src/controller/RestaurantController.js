@@ -65,7 +65,7 @@ const infoById = async (req, res) => {
                 class_rate: res.class_rate,
             };
         });
-        res.status(200).json(result);
+        res.status(200).json(favors);
     } catch (err) {
         res.status(400).json({ message: err });
     }
