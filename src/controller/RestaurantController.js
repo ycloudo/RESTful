@@ -71,4 +71,28 @@ const infoById = async (req, res) => {
     }
 };
 
-export default { ResInfo, AllInfo, infoById };
+const infoByTag = async (req, res) => {
+    const cid = req.params.cid;
+    let result = [];
+    try {
+        Restaurant.find({ restaurant_type: cid }, (err, rest) => {
+            let index = 0;
+            rest.forEach((a) => {
+                result[index++] = {
+                    id: a._id,
+                    name: a.name,
+                    rate: a.rate,
+                    address: a.address,
+                    res_type: a.restaurant_type,
+                    photo: a.photo,
+                    class_rate: a.class_rate,
+                };
+            });
+            res.status(200).json(result);
+        });
+    } catch (err) {
+        res.status(400).json({ message: err });
+    }
+};
+
+export default { ResInfo, AllInfo, infoById, infoByTag };

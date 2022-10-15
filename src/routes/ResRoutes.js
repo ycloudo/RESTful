@@ -5,5 +5,6 @@ const router = express.Router();
 router.get("/info/:rid", RestaurantController.ResInfo);
 router.get("/all", RestaurantController.AllInfo);
 router.post("/getInfoById", RestaurantController.infoById);
+router.get("/getInfoByTag", RestaurantController.infoByTag);
 
 export default router;
