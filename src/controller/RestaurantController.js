@@ -39,9 +39,6 @@ const AllInfo = async (req, res) => {
                     class_rate: a.class_rate,
                 };
             });
-            if (index == 30) {
-                res.status(200).json(result);
-            }
         });
     } catch (err) {
         res.status(400).json({ message: err });
