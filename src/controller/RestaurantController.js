@@ -25,22 +25,26 @@ const ResInfo = async (req, res) => {
 
 const AllInfo = async (req, res) => {
     let result = [];
+    let index = 0;
+    const page = req.params.page;
     try {
-        Restaurant.find({}, (err, rest) => {
-            let index = 0;
-            rest.forEach((a) => {
-                result[index++] = {
-                    id: a._id,
-                    name: a.name,
-                    rate: a.rate,
-                    address: a.address,
-                    res_type: a.restaurant_type,
-                    photo: a.photo,
-                    class_rate: a.class_rate,
-                };
-            });
-            res.status(200).json(result);
+        const rest = await Restaurant.find({})
+            .limit(page * 10)
+            .skip((page - 1) * 10);
+        // Restaurant.find({}, (err, rest) => {
+        rest.forEach((a) => {
+            result[index++] = {
+                id: a._id,
+                name: a.name,
+                rate: a.rate,
+                address: a.address,
+                res_type: a.restaurant_type,
+                photo: a.photo,
+                class_rate: a.class_rate,
+            };
         });
+        res.status(200).json(result);
+        // });
     } catch (err) {
         res.status(400).json({ message: err });
     }
