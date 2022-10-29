@@ -79,7 +79,7 @@ const infoByTag = async (req, res) => {
   let result = [];
   let index = 0;
   try {
-    var rest;
+    let rest;
     if (cid == 99) {
       rest = await Restaurant.find({})
         .limit(10)
