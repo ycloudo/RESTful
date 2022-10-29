@@ -79,9 +79,16 @@ const infoByTag = async (req, res) => {
   let result = [];
   let index = 0;
   try {
-    const rest = await Restaurant.find({ restaurant_type: cid })
-      .limit(page * 10)
-      .skip((page - 1) * 10);
+    var rest;
+    if (cid == 99) {
+      rest = await Restaurant.find({})
+        .limit(10)
+        .skip((page - 1) * 10);
+    } else {
+      rest = await Restaurant.find({ restaurant_type: cid })
+        .limit(10)
+        .skip((page - 1) * 10);
+    }
     rest.forEach((a) => {
       result[index++] = {
         id: a._id,
