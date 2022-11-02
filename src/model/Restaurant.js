@@ -1,34 +1,38 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const RestaurantSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        require: true,
-    },
-    rate: {
-        type: Number,
-        require: true,
-    },
-    address: {
-        type: String,
-        require: true,
-    },
-    restaurant_type: {
-        type: Number,
-        require: true,
-    },
-    photo: {
-        type: String,
-        require: true,
-    },
-    reviews: {
-        type: Array,
-        require: false,
-    },
-    class_rate: {
-        type: Array,
-        require: true,
-    },
+  name: {
+    type: String,
+    require: true,
+  },
+  rate: {
+    type: Number,
+    require: true,
+  },
+  address: {
+    type: String,
+    require: true,
+  },
+  restaurant_type: {
+    type: Number,
+    require: true,
+  },
+  photo: {
+    type: String,
+    require: true,
+  },
+  reviews: {
+    type: Array,
+    require: false,
+  },
+  class_rate: {
+    type: Array,
+    require: true,
+  },
+  popularity: {
+    type: String,
+    require: false,
+  },
 });
 
-export default mongoose.model("Restaurant", RestaurantSchema);
+export default mongoose.model('Restaurant', RestaurantSchema);
