@@ -105,6 +105,16 @@ const setSetting = async (req, res) => {
   }
 };
 
+const getSetting = async (req, res) => {
+  const uid = req.params.uid;
+  try {
+    const result = await User.findOne({ _id: uid });
+    res.status(200).json({ setting: result.setting });
+  } catch (err) {
+    res.status(400).json({ message: err });
+  }
+};
+
 export default {
   editProfile,
   getProfile,
@@ -113,4 +123,5 @@ export default {
   getDrawerInfo,
   setFavor,
   setSetting,
+  getSetting,
 };
