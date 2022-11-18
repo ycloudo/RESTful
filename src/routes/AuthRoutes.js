@@ -14,6 +14,6 @@ router.get('/getDrawerInfo/:uid', verifyJWT, UserController.getDrawerInfo);
 router.post('/isTokenValid', AuthController.isTokenValid);
 router.post('/setFavor', verifyJWT, UserController.setFavor);
 router.post('/setsetting', verifyJWT, UserController.setSetting);
-router.get('/getsetting', UserController.getSetting);
+router.get('/getsetting/:uid', UserController.getSetting);
 
 export default router;
