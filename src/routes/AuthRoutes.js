@@ -13,6 +13,6 @@ router.get('/getFavor/:uid', verifyJWT, UserController.getFavor);
 router.get('/getDrawerInfo/:uid', verifyJWT, UserController.getDrawerInfo);
 router.post('/isTokenValid', AuthController.isTokenValid);
 router.post('/setFavor', verifyJWT, UserController.setFavor);
-router.post('/setsetting', UserController.setSetting);
+router.post('/setsetting', verifyJWT, UserController.setSetting);
 
 export default router;
