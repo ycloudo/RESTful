@@ -90,8 +90,8 @@ const setFavor = async (req, res) => {
 
 const setSetting = async (req, res) => {
   const preferObject = req.body.prefer;
-  const filter = { _id: uid };
   const uid = req.body.uid;
+  const filter = { _id: uid };
   const updateDoc = {
     $set: {
       setting: preferObject,
