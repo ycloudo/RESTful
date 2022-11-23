@@ -115,6 +115,47 @@ const getSetting = async (req, res) => {
   }
 };
 
+const editReord = async (req, res) => {
+  const rid = req.body.rid;
+  const uid = req.body.uid;
+  const filter = { _id: uid };
+  let response, counter;
+  try {
+    const result = await User.findOne({ _id: uid });
+    const records = result.record;
+    if (records[rid]) {
+      //if rid already in record
+      counter = records[rid].counter += 1;
+      const updatedoc = {
+        $set: {
+          record: {
+            ...records,
+            [rid]: {
+              counter: counter,
+            },
+          },
+        },
+      };
+      response = await User.updateOne(filter, updatedoc);
+    } else {
+      const updatedoc = {
+        $set: {
+          record: {
+            ...records,
+            [rid]: {
+              counter: 1,
+            },
+          },
+        },
+      };
+      response = await User.updateOne(filter, updatedoc);
+    }
+    res.status(200).json(counter);
+  } catch (e) {
+    res.status(400).json({ message: e });
+  }
+};
+
 export default {
   editProfile,
   getProfile,
@@ -124,4 +165,5 @@ export default {
   setFavor,
   setSetting,
   getSetting,
+  editReord,
 };

@@ -31,6 +31,10 @@ const UserSchema = new mongoose.Schema({
     type: Object,
     required: false,
   },
+  record: {
+    type: Object,
+    required: false,
+  },
 });
 
 export default mongoose.model('User', UserSchema);

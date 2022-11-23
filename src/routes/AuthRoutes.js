@@ -15,5 +15,6 @@ router.post('/isTokenValid', AuthController.isTokenValid);
 router.post('/setFavor', verifyJWT, UserController.setFavor);
 router.post('/setsetting', verifyJWT, UserController.setSetting);
 router.get('/getsetting/:uid', UserController.getSetting);
+router.post('/editRecord', verifyJWT, UserController.editReord);
 
 export default router;
