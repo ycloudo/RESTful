@@ -30,7 +30,7 @@ const RestaurantSchema = new mongoose.Schema({
     require: true,
   },
   popularity: {
-    type: String,
+    type: Number,
     require: false,
   },
 });

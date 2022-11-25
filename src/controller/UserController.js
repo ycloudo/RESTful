@@ -1,5 +1,6 @@
 import User from '../model/User.js';
 import Avatars from '../model/Avatars.js';
+import Restaurant from '../model/Restaurant.js';
 
 const editProfile = async (req, res) => {
   const uid = req.params.uid;
@@ -122,7 +123,9 @@ const editReord = async (req, res) => {
   let response, counter;
   try {
     const result = await User.findOne({ _id: uid });
+    const res2 = await Restaurant.findOne({ _id: rid });
     const records = result.record;
+    const popularity = (res2.popularity += 1);
     if (records[rid]) {
       //if rid already in record
       counter = records[rid].counter += 1;
@@ -150,7 +153,13 @@ const editReord = async (req, res) => {
       };
       response = await User.updateOne(filter, updatedoc);
     }
-    res.status(200).json(counter);
+    const updatedoc2 = {
+      $set: {
+        popularity: popularity,
+      },
+    };
+    await Restaurant.updateOne({ _id: rid }, updatedoc2);
+    res.status(200).json(popularity);
   } catch (e) {
     res.status(400).json({ message: e });
   }
