@@ -165,6 +165,94 @@ const editReord = async (req, res) => {
   }
 };
 
+const recommend = async (req, res) => {
+  const uid = req.params.uid;
+  const user = await User.findOne({ _id: uid });
+  const settingObj = user.setting;
+  const recordObj = user.record;
+  const s1Array = []; //餐廳類別陣列
+  const s2Array = []; //喜好陣列
+  const recordArray = []; //使用者瀏覽過餐廳陣列
+  let count = 1;
+  let index1 = 0,
+    index2 = 0;
+  let total_Click_Time = 0; //user total click time
+  //split the setting object
+  Object.keys(settingObj).forEach((e) => {
+    if (settingObj[e]) {
+      if (count < 5) {
+        s1Array[index1++] = count;
+      } else {
+        s2Array[index2++] = count - 5;
+      }
+    }
+    count += 1;
+  });
+  //caculate user total click time
+  Object.keys(recordObj).forEach((key, index) => {
+    total_Click_Time += recordObj[key].counter;
+    recordArray[index] = key;
+  });
+  const platform_Click_Time = await Restaurant.aggregate([
+    {
+      $group: {
+        _id: null,
+        count: { $sum: '$popularity' },
+      },
+    },
+  ]);
+  const restaurants = [];
+  const rest = await Restaurant.find({});
+  rest.forEach((obj, index) => {
+    let h,
+      J = 0,
+      L = 0;
+    let Ratio_I = 0,
+      single_Click_Time = 0,
+      Ratio_K = 0;
+    const type = obj.restaurant_type;
+    const class_rate = obj.class_rate;
+    const id = obj._id;
+    const popularity = obj.popularity;
+    const total_popularity = platform_Click_Time[0].count;
+    //caculate H
+    if (s2Array.findIndex((e) => e == type) == -1) {
+      h = 0.3;
+    } else {
+      h = 0.7;
+    }
+    //caculate J
+    s1Array.forEach((e) => {
+      J += class_rate[e - 1];
+    });
+    //caculate Ratio_I
+    if (recordArray.findIndex((e) => e == id) != -1) {
+      single_Click_Time = recordObj[id].counter;
+    }
+    Ratio_I = single_Click_Time / total_Click_Time;
+    //caculate Ratio_K
+    Ratio_K = popularity / total_popularity;
+    //caculate L
+    L = h + Ratio_I * J + Ratio_K;
+    restaurants[index] = {
+      id: obj.id,
+      weight: h,
+      J: J,
+      L: L,
+    };
+  });
+  restaurants.sort((a, b) => {
+    if (a.L < b.L) {
+      return 1;
+    }
+    if (a.L > b.L) {
+      return -1;
+    }
+    return 0;
+  });
+  res.status(200).json(restaurants.slice(0, 9));
+};
+
 export default {
   editProfile,
   getProfile,
@@ -175,4 +263,5 @@ export default {
   setSetting,
   getSetting,
   editReord,
+  recommend,
 };
