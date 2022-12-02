@@ -236,6 +236,7 @@ const recommend = async (req, res) => {
     L = h + Ratio_I * J + Ratio_K;
     restaurants[index] = {
       id: obj.id,
+      name: obj.name,
       weight: h,
       J: J,
       L: L,
