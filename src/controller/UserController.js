@@ -237,9 +237,14 @@ const recommend = async (req, res) => {
     restaurants[index] = {
       id: obj.id,
       name: obj.name,
-      weight: h,
-      J: J,
-      L: L,
+      // weight: h,
+      // J: J,
+      // L: L,
+      rate: obj.rate,
+      address: obj.address,
+      res_type: obj.restaurant_type,
+      photo: obj.photo,
+      class_rate: obj.class_rate,
     };
   });
   restaurants.sort((a, b) => {
