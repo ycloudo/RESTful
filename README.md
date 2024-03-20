@@ -25,6 +25,15 @@ if you have Docker installed in your computer, you can simply fork this repo and
 
 ## API
 
+### Authentication
+
+### Searching
+
+### Fetching Restaurants Information
+
+### Fetching Other Data
+
+
 
 
 
