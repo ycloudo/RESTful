@@ -1,0 +1,35 @@
+version: '3.9'
+
+services:
+  # MongoDB services
+  mongo_db:
+    container_name: db_container
+    image: mongo:latest
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: project
+    ports:
+      - 2717:27017
+
+  # Mongo Seed
+  mongo_seed:
+    image: mongo:latest
+    links:
+      - mongo_db
+    volumes:
+      - ./mongo_seed:/mongo_seed
+    command: 
+      /bin/bash -c "chmod +x /mongo_seed/import.sh && /mongo_seed/import.sh"
+  
+  # NodeJS API services  
+  api:
+    build: .
+    ports:
+      - 8080:8080
+    environment:
+      DB_CONNECT: mongodb://db_container:27017
+      JWT_SECRET: cloudoccclllooodddooo
+    depends_on:
+      - mongo_db
+
+  
