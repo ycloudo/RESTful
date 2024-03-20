@@ -16,7 +16,17 @@ docker compose up
 ### Development Dependencies
 - nodemon - Monitors Node.js files for changes and automatically restarts the server.
 
-### Application Structure
-
+### Project Tree
+  - **Project_backend**
+    - **mongo_seed**
+        - avatars.json
+        - import.sh
+        - restaurants_slice.json
+    - **src**
+        - **controller**
+        - **middleware**
+        - **model**
+        - **routes**
+    - index.js
 
 
