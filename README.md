@@ -26,16 +26,16 @@ if you have Docker installed in your computer, you can simply fork this repo and
 ## API
 
 ### Authentication
-> prefix of this url: /api/user
+> prefix: /api/user
 
 ### Searching
-> prefix of this url: /api/search
+> prefix: /api/search
 
 ### Fetching Restaurants Information
-> prefix of this url: /api/restaurant
+> prefix: /api/restaurant
 
 ### Fetching Other Data
-> prefix of this url: /api/data
+> prefix: /api/data
 
 
 
