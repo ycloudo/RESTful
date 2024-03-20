@@ -3,9 +3,9 @@ Graduation project of the Department of Information Management, National Sun Yat
 
 ## Getting Started (with Docker)
 if you have Docker installed in your computer, you can simply fork this repo and get started with following script:
-```
-docker compose up
-```
+  ```bash
+   $ docker-compose up
+  ```
 ## Code Overview
 ### dependencies
 - dotenv - Loads .env parameters
@@ -16,17 +16,16 @@ docker compose up
 ### Development Dependencies
 - nodemon - Monitors Node.js files for changes and automatically restarts the server.
 
-### Project Tree
-  - **Project_backend**
-    - **mongo_seed**
-        - avatars.json
-        - import.sh
-        - restaurants_slice.json
-    - **src**
-        - **controller**
-        - **middleware**
-        - **model**
-        - **routes**
-    - index.js
+### Application Structure
+- `index.js` - The entry point to our application. This file defines the express server, integrates all the routes, initializes the logger and the mongoDB connection. 
+- `src/controller/` - This folder contains the controllers for the app to read and write data to MongoDB.
+- `src/routes/` - This folder contains the route definitions for the app.
+- `src/models/` - This folder contains the Mongoose Schema definitions.
+- `mongo_seed/` - This folder contains example data and script that push that data into MongoDB on Docker.
+
+## API
+
+
+
 
 
