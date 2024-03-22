@@ -23,19 +23,10 @@ if you have Docker installed in your computer, you can simply fork this repo and
 - `src/models/` - This folder contains the Mongoose Schema definitions.
 - `mongo_seed/` - This folder contains example data and script that push that data into MongoDB on Docker.
 
-## API
+# API Examples
 
-### Authentication
-> prefix: /api/user
+## 
 
-### Searching
-> prefix: /api/search
-
-### Fetching Restaurants Information
-> prefix: /api/restaurant
-
-### Fetching Other Data
-> prefix: /api/data
 
 
 
