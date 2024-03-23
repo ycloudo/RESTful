@@ -1,20 +1,12 @@
 import Restaurant from '../model/Restaurant.js';
 
-const ResInfo = async (req, res) => {
+const ResReviews = async (req, res) => {
   const id = req.params.rid;
   let i = 0;
   try {
     const restaurant = await Restaurant.findOne({
       _id: id,
     });
-    // let reviews = restaurant.reviews;
-    // reviews.forEach((e) => {
-    //   const array = e.type;
-    //   const result = array.filter((item, index, array) => {
-    //     return array.indexOf(item) === index;
-    //   });
-    //   reviews[i++].type = result;
-    // });
     res.status(200).json({
       reviews: restaurant.reviews,
     });
@@ -106,4 +98,4 @@ const infoByTag = async (req, res) => {
   }
 };
 
-export default { ResInfo, AllInfo, infoById, infoByTag };
+export default { ResReviews, AllInfo, infoById, infoByTag };
