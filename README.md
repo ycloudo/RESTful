@@ -188,7 +188,7 @@ cid: type
                     1.41,
                     0
                 ]
-            }, ...
+            },
     ```
 
 ### Searching Restaurants <a name="SR"/>
