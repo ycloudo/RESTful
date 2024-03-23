@@ -23,6 +23,10 @@ if you have Docker installed in your computer, you can simply fork this repo and
 - `src/models/` - This folder contains the Mongoose Schema definitions.
 - `mongo_seed/` - This folder contains example data and script that push that data into MongoDB on Docker.
 
+## Data
+We have collected over 500 restaurants by crawling Google Maps, Dcard, and PTT. However, due to the file limit on Github, we can only provide 100 of them. Below are some IDs for example
+`6364699444cde686910b5c7e, 63646999a3cc2e9ec63d3a40, 6364698858e0863d12ad4bd5` (If you access the dataBase, you can find the rest).
+
 # API Examples
 
 ## 
