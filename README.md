@@ -1,5 +1,5 @@
 # Project_backend
-Graduation project of the Department of Information Management, National Sun Yat-sen University. This repo is for backend development, it demonstrate how api works in our project.
+Graduation project of the Department of Information Management, National Sun Yat-sen University. This repo is for backend development, it demonstrate how api works in our project. Repo for frontend:https://github.com/ycloudo/Project_frontend
 
 ## Getting Started (with Docker)
 if you have Docker installed in your computer, you can simply fork this repo and get started with following script:
