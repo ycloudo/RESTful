@@ -2,7 +2,6 @@ import Restaurant from '../model/Restaurant.js';
 
 const ResReviews = async (req, res) => {
   const id = req.params.rid;
-  let i = 0;
   try {
     const restaurant = await Restaurant.findOne({
       _id: id,
