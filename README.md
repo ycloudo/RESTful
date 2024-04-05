@@ -1,5 +1,4 @@
-# Project_backend
-Graduation project of the Department of Information Management, National Sun Yat-sen University. This repo is for backend development, it demonstrate how api works in our project. Repo for frontend:https://github.com/ycloudo/Project_frontend
+# RESTful
 
 ## Getting Started (with Docker)
 if you have Docker installed in your computer, you can simply fork this repo and get started with following script:
@@ -31,16 +30,18 @@ We have collected over 500 restaurants by crawling Google Maps, Dcard, and PTT. 
 - [Authentication](#Auth)
   - [Register](#Register)
   - [Login](#Login)
-  - [Varify JWT (authentication/authoriztion)](#JWT)
-- [Functions](#Func)
+- [User Operations](#UO)
+    - [Get User Profile](#GUP)
     - [Edit User Profile](#EDP)
-    - [Get Restaurants Info By tag](#InfoByTag)
-    - [Get Restaurant Reviews](#GRR)
-    - [Searching Restaurants](#SR)
+- [Get Restaurants Info](#GetRes)
+    - [By Tag (with Lazy loading)](#ByTag)
+    - [By Restaurant id](#ByRID)
+    - [By Text](#ByText)
+    
 ## Authentication <a name="Auth"/>
 ### Register <a name="Register"/>
 * Request
-    `POST /api/user/register`
+    `POST /api/user`
 
     ```JSON
     {
@@ -68,7 +69,7 @@ We have collected over 500 restaurants by crawling Google Maps, Dcard, and PTT. 
 
 ### Login <a name="Login"/>
 * Request
-    `POST /api/user/login`
+    `POST /api/login`
     
     ```JSON
     {
@@ -84,24 +85,29 @@ We have collected over 500 restaurants by crawling Google Maps, Dcard, and PTT. 
         "account": "test001"
     }
     ```
-### Varify JWT (authentication/authoriztion) <a name="JWT"/>
-* Resquest
-    `GET /api/user/isTokenValid`
+## User Operations <a name="UO"/>
+### Get User Profile <a name="GUP"/>
+* Request
+`GET /api/user/:uid`
 
     ```JSON
-    {
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWZhZDE0Mjc1NTY3NjU0NGJkZTM3MjIiLCJpYXQiOjE3MTEwODUwNTMsImV4cCI6MTcxMTE3MTQ1M30.Sdtd0qdQFFgbistuT3vUjslZlc1JxrMVIrz6D4EF2Ik"
+    "header":{
+        "auth-token": "JWT token given while login/register"
     }
     ```
 * Response(200 ok)
-    ```JSON
-        true
-    ```
-
-## Functions <a name="Func"/>
+```JSON
+{
+    "name": "test",
+    "account": "test001",
+    "password": "test001",
+    "gender": false,
+    "avatar_id": 4
+}
+```
 ### Edit User Profile <a name="EDP"/>
 * Request
-`PATCH /api/user/editProfile/:uid`
+`PATCH /api/user/:uid`
 
     ```JSON
     "header":{
@@ -122,8 +128,10 @@ We have collected over 500 restaurants by crawling Google Maps, Dcard, and PTT. 
 }
 ```
 
-### Get Restaurants Info By tag (lazy loading - ten per page) <a name="InfoByTag"/>
-We have a function that allows users to filter restaurants by selecting different tags. Below are the types related to cid:
+
+## Get Restaurants Infomations <a name="GetRes"/>
+We have a function that allows users to get restaurants informations by using different filter. Below are the filters:
+### By Tag (with Lazy loading) <a name="ByTag"/>
 ```
 cid: type
 1: "中式"
@@ -134,11 +142,11 @@ cid: type
 6: "泰式"
 7: "異國"
 8: "輕食"
-9: "All"
+99: "All"
 ```
 * Request
-`GET /api/restaurant/getInfoByTag/:cid/:page`
-* Response (200 ok)
+`GET /api/restaurants?cid=[1-9]&page=[1-end]`
+* Response (200 ok) (10 restaurants a page)
     ```json
     [
         {
@@ -154,47 +162,65 @@ cid: type
         }
     ]
     ```
-### Get Restaurant Reviews <a name="GRR"/>
+### By Restaurant id <a name="ByRID"/>
 * Request
-`/api/restaurant/reviews/:rid`
+`/api/restaurant?rid=xxxxx`
 * Response (200 ok)
-  - comment: full comment
-  - rate: the rate generate by our sentiment analysis
-  - SCR: each single comment rate (cut by punctuation mark)
-  - type: the type generate by our classification model.ex: price, environment
-  - singlerate: the rate of each type above
     ```json
-    "reviews": [
-            {
-                "comment": "從小吃到大，但也漸漸漲價了",
-                "rate": 1.904125,
-                "resource": "Google",
-                "singlecomment": [
-                    "從小吃到大",
-                    "但也漸漸漲價了"
-                ],
-                "SCR": [
-                    3.5121,
-                    1.4123
-                ],
-                "type": [
-                    3,
-                    4
-                ],
-                "singlerate": [
-                    0,
-                    0,
-                    3.51,
-                    1.41,
-                    0
-                ]
-            },
-    ```
+     [
+        {
+            "id": "636469836279633b372c6f43",
+            "name": "713厝",
+            "rate": 2.45,
+            "address": "高雄市鼓山區九如四路713號",
+            "res_type": 1,
+            "photo": "store in base 64",
+            "reviews": [
+              {
+                  "comment": "從小吃到大，但也漸漸漲價了",
+                  "rate": 1.904125,
+                  "resource": "Google",
+                  "singlecomment": [
+                      "從小吃到大",
+                      "但也漸漸漲價了"
+                  ],
+                  "SCR": [
+                      3.5121,
+                      1.4123
+                  ],
+                  "type": [
+                      3,
+                      4
+                  ],
+                  "singlerate": [
+                      0,
+                      0,
+                      3.51,
+                      1.41,
+                      0
+                  ]
+              },
+              {
+                  
+              }
+          ]
+      },
+      {
+      
+      }
+  ]
+  ```
+The explanations of "reviews":
+- comment: full comment
+- rate: the rate generate by our sentiment analysis
+- SCR: each single comment rate (cut by punctuation mark)
+- type: the type generate by our classification model.ex: price, environment
+- singlerate: the rate of each type above
 
-### Searching Restaurants <a name="SR"/>
+### By Text <a name="ByText"/>
 Using regular expression for searching : `".*" + text + ".*$"`
 * Request
-`api/search/text/:text`
+`api/api/restaurant?text=xxx`
 * Response
     ```json
     [
