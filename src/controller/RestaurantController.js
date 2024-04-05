@@ -23,7 +23,7 @@ const fetchRestaurantById = async (rid) => {
   try {
     const restaurants = await Restaurant.findOne({
       _id: rid,
-    }).select('id name rate address restaurant_type photo class_rate');
+    }).select('id name rate address restaurant_type photo class_rate reviews');
     return {
       id: restaurants._id,
       name: restaurants.name,
@@ -32,6 +32,7 @@ const fetchRestaurantById = async (rid) => {
       res_type: restaurants.restaurant_type,
       photo: restaurants.photo,
       class_rate: restaurants.class_rate,
+      reviews: restaurants.reviews,
     };
   } catch (error) {
     console.error('Error fetching restaurants by id:', error);
