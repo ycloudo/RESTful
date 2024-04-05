@@ -4,18 +4,12 @@ import UserController from '../controller/UserController.js';
 import verifyJWT from '../middleware/verifyJWT.js';
 
 const router = express.Router();
-router.post('/register', AuthController.register);
+router.post('/users', AuthController.register);
 router.post('/login', AuthController.login);
-router.patch('/editProfile/:uid', verifyJWT, UserController.editProfile);
-router.get('/getProfile/:uid', verifyJWT, UserController.getProfile);
-router.get('/getAvatar/:aid', UserController.getAvatarId);
-router.get('/getFavor/:uid', verifyJWT, UserController.getFavor);
-router.get('/getDrawerInfo/:uid', verifyJWT, UserController.getDrawerInfo);
-router.post('/isTokenValid', AuthController.isTokenValid);
-router.post('/setFavor', verifyJWT, UserController.setFavor);
-router.post('/setsetting', verifyJWT, UserController.setSetting);
-router.get('/getsetting/:uid', UserController.getSetting);
-router.post('/editRecord', verifyJWT, UserController.editReord);
-router.get('/recommend/:uid', UserController.recommend);
-
+router.patch('/users/:uid', verifyJWT, UserController.editProfile);
+router.get('/users/:uid', verifyJWT, UserController.getProfile);
+router.get('/favors/:uid', verifyJWT, UserController.getFavor);
+router.post('/favors', verifyJWT, UserController.setFavor);
+router.patch('/settings/:uid', verifyJWT, UserController.setSetting);
+router.get('/settings/:uid', UserController.getSetting);
 export default router;

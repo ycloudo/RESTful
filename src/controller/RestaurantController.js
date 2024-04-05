@@ -1,100 +1,94 @@
 import Restaurant from '../model/Restaurant.js';
 
-const ResReviews = async (req, res) => {
-  const id = req.params.rid;
+const getRestaurants = async (req, res) => {
+  let restaurantInfo;
   try {
-    const restaurant = await Restaurant.findOne({
-      _id: id,
-    });
-    res.status(200).json({
-      reviews: restaurant.reviews,
-    });
-  } catch (err) {
-    res.status(400).json({ message: err });
-  }
-};
-
-const AllInfo = async (req, res) => {
-  let result = [];
-  let index = 0;
-  const page = req.params.page;
-  try {
-    const rest = await Restaurant.find({})
-      .limit(10)
-      .skip((page - 1) * 10);
-    rest.forEach((a) => {
-      result[index++] = {
-        id: a._id,
-        name: a.name,
-        rate: a.rate,
-        address: a.address,
-        res_type: a.restaurant_type,
-        photo: a.photo,
-        class_rate: a.class_rate,
-      };
-    });
-    res.status(200).json(result);
-  } catch (err) {
-    res.status(400).json({ message: err });
-  }
-};
-
-const infoById = async (req, res) => {
-  let result = [];
-  let index = 0;
-  const favors = req.body.favors;
-  try {
-    for (let i = 0; i < favors.length; i++) {
-      const res = await Restaurant.findOne({
-        _id: favors[i],
-      });
-      result[index++] = {
-        id: res._id,
-        name: res.name,
-        rate: res.rate,
-        address: res.address,
-        res_type: res.restaurant_type,
-        photo: res.photo,
-        class_rate: res.class_rate,
-      };
+    if (req.query.rid) {
+      restaurantInfo = await fetchRestaurantById(req.query.rid);
+    } else if (req.query.text) {
+      restaurantInfo = await fetchRestaurantByText(req.query.text);
+    } else if (req.query.cid && req.query.page) {
+      restaurantInfo = await fetchRestaurantByTag(
+        req.query.cid,
+        req.query.page
+      );
     }
-    res.status(200).json(result);
-  } catch (err) {
-    res.status(400).json({ message: err });
+    res.status(200).json(restaurantInfo);
+  } catch (error) {
+    res.status(400).json({ error: error });
   }
 };
 
-const infoByTag = async (req, res) => {
-  const cid = req.params.cid;
-  const page = req.params.page;
-  let result = [];
-  let index = 0;
+const fetchRestaurantById = async (rid) => {
   try {
-    let rest;
+    const restaurants = await Restaurant.findOne({
+      _id: rid,
+    }).select('id name rate address restaurant_type photo class_rate');
+    return {
+      id: restaurants._id,
+      name: restaurants.name,
+      rate: restaurants.rate,
+      address: restaurants.address,
+      res_type: restaurants.restaurant_type,
+      photo: restaurants.photo,
+      class_rate: restaurants.class_rate,
+    };
+  } catch (error) {
+    console.error('Error fetching restaurants by id:', error);
+    throw error;
+  }
+};
+
+const fetchRestaurantByTag = async (cid, page) => {
+  let restaurants;
+  try {
     if (cid == 99) {
-      rest = await Restaurant.find({})
+      restaurants = await Restaurant.find({})
+        .select('id name rate address restaurant_type photo class_rate')
         .limit(10)
         .skip((page - 1) * 10);
     } else {
-      rest = await Restaurant.find({ restaurant_type: cid })
+      restaurants = await Restaurant.find({ restaurant_type: cid })
+        .select('id name rate address restaurant_type photo class_rate')
         .limit(10)
         .skip((page - 1) * 10);
     }
-    rest.forEach((a) => {
-      result[index++] = {
-        id: a._id,
-        name: a.name,
-        rate: a.rate,
-        address: a.address,
-        res_type: a.restaurant_type,
-        photo: a.photo,
-        class_rate: a.class_rate,
-      };
-    });
-    res.status(200).json(result);
-  } catch (err) {
-    res.status(400).json({ message: err });
+
+    return restaurants.map((rest) => ({
+      id: rest._id,
+      name: rest.name,
+      rate: rest.rate,
+      address: rest.address,
+      res_type: rest.restaurant_type,
+      photo: rest.photo,
+      class_rate: rest.class_rate,
+    }));
+  } catch (error) {
+    console.error('Error fetching restaurants by tag:', error);
+    throw error;
   }
 };
 
-export default { ResReviews, AllInfo, infoById, infoByTag };
+const fetchRestaurantByText = async (text) => {
+  try {
+    const regex = new RegExp('.*' + text + '.*', 'i');
+    const restaurants = await Restaurant.find({ name: regex }).select(
+      'id name rate address restaurant_type photo class_rate'
+    );
+
+    return restaurants.map((rest) => ({
+      id: rest._id,
+      name: rest.name,
+      rate: rest.rate,
+      address: rest.address,
+      res_type: rest.restaurant_type,
+      photo: rest.photo,
+      class_rate: rest.class_rate,
+    }));
+  } catch (error) {
+    console.error('Error fetching restaurants by text:', error);
+    throw error;
+  }
+};
+
+export default { getRestaurants };

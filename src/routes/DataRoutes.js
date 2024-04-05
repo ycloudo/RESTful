@@ -1,7 +1,7 @@
-import express from "express";
-import DataController from "../controller/DataController.js";
+import express from 'express';
+import DataController from '../controller/DataController.js';
 
 const router = express.Router();
-router.get("/allAvatar", DataController.getAvatars);
+router.get('/avatars', DataController.getAvatars);
 
 export default router;

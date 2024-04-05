@@ -39,16 +39,6 @@ const getProfile = async (req, res) => {
   }
 };
 
-const getAvatarId = async (req, res) => {
-  const aid = req.params.aid;
-  try {
-    const result = await Avatars.findOne({ aid: aid });
-    res.status(200).json({ base64: result.base64 });
-  } catch (err) {
-    res.status(400).json({ message: err });
-  }
-};
-
 const getFavor = async (req, res) => {
   const uid = req.params.uid;
   try {
@@ -91,7 +81,7 @@ const setFavor = async (req, res) => {
 
 const setSetting = async (req, res) => {
   const preferObject = req.body.prefer;
-  const uid = req.body.uid;
+  const uid = req.params.uid;
   const filter = { _id: uid };
   const updateDoc = {
     $set: {
@@ -116,7 +106,7 @@ const getSetting = async (req, res) => {
   }
 };
 
-const editReord = async (req, res) => {
+const editRecord = async (req, res) => {
   const rid = req.body.rid;
   const uid = req.body.uid;
   const filter = { _id: uid };
@@ -262,12 +252,11 @@ const recommend = async (req, res) => {
 export default {
   editProfile,
   getProfile,
-  getAvatarId,
   getFavor,
   getDrawerInfo,
   setFavor,
   setSetting,
   getSetting,
-  editReord,
+  editRecord,
   recommend,
 };
